@@ -29,7 +29,88 @@ def populate_program_deck():
 
     return deck
 
-# /program cards
+# end Create the program cards
+
+
+
+# Create a basic board
+
+em = u'\u2014'
+fb = u'\u2588'
+board = []
+
+for i in range(0, 25):
+    if i % 2 != 0:
+        board.append(['+'] * 25)
+    else:
+        board.append([' '] * 25)
+
+for row in range(1, len(board), 2):
+    for col in range(0, len(board[row]), 2):
+        board[row][col] = ' '
+
+for row in range(0, len(board), len(board) - 1):
+    for col in range(0, len(board[row])):
+        board[row][col] = em
+
+for row in range(1, len(board) - 1):
+    for col in range(0, len(board[row]), len(board[row]) - 1):
+        board[row][col] = '|'
+
+# end Create a basic board
+
+
+
+# Print board
+
+def print_board(board):
+    print ''
+    for row in board:
+        print ' '.join(row)
+    print ''
+
+# end Print board
+
+
+
+# Class for robots
+
+class Robot:
+
+    direction = "north"
+    damage = 10
+    program_hand = []
+    active = False
+    valid_directions = ["north", "east", "south", "west"]
+    display_character = u'\u2540'
+    valid_display_characters = [u'\u2540', u'\u253e', u'\u2541', u'\u253d']
+
+    def __init__(self, name, color):
+        self.name = name
+        self.color = color
+
+    def rotate_right(self):
+        if self.direction == self.valid_directions[3]:
+            self.direction = self.valid_directions[0]
+            self.display_character = self.valid_display_characters[0]
+        else:
+            for i in range(0, 3):
+                if self.direction == self.valid_directions[i]:
+                    self.direction = self.valid_directions[i + 1]
+                    self.display_character = self.valid_display_characters[i + 1]
+                    break
+
+    def rotate_left(self):
+        for i in range(0, 3):
+            self.rotate_right()
+
+    def u_turn(self):
+        for i in range(0, 2):
+            self.rotate_right()
+
+# end Class for robots
+
+
 
 '''
 SEQUENCE OF PLAY
